@@ -35,7 +35,7 @@ https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-o
 5. run composer install :
 
     ```bash
-    $ docker-compose exec pizzaria bash
+    $ composer install
     ```
 6. create key:
 
@@ -47,3 +47,5 @@ https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-o
     ```bash
     $ php artisan migrate
     ```
+
+8. Exit container and Access http://127.0.0.1:8000
