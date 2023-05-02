@@ -42,7 +42,7 @@ https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-o
     ```bash
     $ php artisan key:generate
     ```
-7. run migrate:
+7. run migration:
 
     ```bash
     $ php artisan migrate
