@@ -1,6 +1,6 @@
 # Pizzaria - Container/Docker
 
-## object
+## Vision
 
 This is a project thought to help a friend in his pizzeria and also to improve my programming knowledge
 
