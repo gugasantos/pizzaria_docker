@@ -23,20 +23,20 @@ https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-o
     $ cp .env.example .env
     ```
 3.  Follow the pattern below in database configuration:
-
+    ```
     DB_CONNECTION=pgsql
     DB_HOST=db_pizzaria
     DB_PORT=5432
     DB_DATABASE=pizzaria
     DB_USERNAME=root
     DB_PASSWORD=root
-
+    ```
 4. Run the stack:
     ```bash
     $ docker-compose up -d
     ```
 
-5. Access container:
+5. access the containe:
 
     ```bash
     $ docker-compose exec pizzaria bash
