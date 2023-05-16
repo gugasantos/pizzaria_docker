@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\CardapioController;
+use App\Http\Controllers\pedidoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+##Route::get('/', function () {
+##  return redirect()->route('pedido');
+##});
+
+Route::resource('/',CardapioController::class);
+Route::resource('cardapio',CardapioController::class);
+
