@@ -46,7 +46,7 @@ class CardapioController extends Controller
 
 
         if($validator->fails()){
-            return redirect()->route('cardapio.create')
+            return redirect()->route('/.create')
                             ->withErrors($validator)
                             ->withInput();
         }
@@ -57,7 +57,7 @@ class CardapioController extends Controller
         $pizza->description = $data['description'];
         $pizza->save();
 
-        return redirect()->route('cardapio.index');
+        return redirect()->route('/.index');
     }
 
     /**

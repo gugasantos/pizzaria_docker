@@ -26,7 +26,7 @@
     <div class="card">
         <div class="card-body">
 
-            <form action="{{route('cardapio.store')}}" method="POST" class="form-horizontal">
+            <form action="{{route('store')}}" method="POST" class="form-horizontal">
                 @csrf
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Nome</label>
@@ -52,7 +52,7 @@
                     <label class="col-sm-2 col-form-label"></label>
                     <div class="col-sm-10">
                         <input type="submit" value="Criar" class="btn btn-success">
-                        <a href="{{route('cardapio.index')}}" class="btn btn-danger">Voltar</a>
+                        <a href="{{route('index')}}" class="btn btn-danger">Voltar</a>
                     </div>
                 </div>
 

@@ -20,5 +20,5 @@ use Illuminate\Support\Facades\Route;
 ##});
 
 Route::resource('/',CardapioController::class);
-Route::resource('cardapio',CardapioController::class);
+
 

@@ -3,7 +3,7 @@
 @section('content_header')
     <h1>
     Cardapio
-    <a href="{{route('cardapio.create')}}" class="btn btn-sm btn-success">Adicionar nova pizza ao cardapio</a>
+    <a href="{{route('create')}}" class="btn btn-sm btn-success">Adicionar nova pizza ao cardapio</a>
     </h1>
 @endsection
 
@@ -27,8 +27,8 @@
 
                     <td style="text-align:center">R$ {{number_format((float)$pizza->price, 2, ',', '')}}</td>
                     <td>
-                        <a href="{{route('cardapio.edit',[$pizza->id])}}" class="btn btn-sm btn-info">Editar</a>
-                        <form class="d-inline" action="{{route('cardapio.destroy',[$pizza->id])}}" method="POST" onsubmit="return confirm('Tem certeza que deseja exluir essa pizza do cardápio?')">
+                        <a href="{{route('edit',[$pizza->id])}}" class="btn btn-sm btn-info">Editar</a>
+                        <form class="d-inline" action="{{route('destroy',[$pizza->id])}}" method="POST" onsubmit="return confirm('Tem certeza que deseja exluir essa pizza do cardápio?')">
                             @method('DELETE')
                             @csrf
                             <button class="btn btn-sm btn-danger">Excluir</button>
