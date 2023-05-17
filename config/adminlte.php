@@ -65,7 +65,7 @@ return [
 
     'logo' => '<b>Marinara</b>',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo_img_class' => 'brand-image img-thumbnail elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Admin Logo',
@@ -192,10 +192,10 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    'classes_sidebar' => 'sidebar-dark-success elevation-1',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
-    'classes_topnav_nav' => 'navbar-expand',
+    'classes_topnav_nav' => 'navbar-expand ',
     'classes_topnav_container' => 'container',
 
     /*
@@ -306,7 +306,7 @@ return [
         ],
         [
             'text' => 'Clientes',
-            'url'  => 'clientes',
+            'url'  => 'client',
             'icon' => 'nav-icon fas fa-fw fa-user',
         ],
         [

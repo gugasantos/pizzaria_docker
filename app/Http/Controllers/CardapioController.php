@@ -57,15 +57,22 @@ class CardapioController extends Controller
         $pizza->description = $data['description'];
         $pizza->save();
 
-        return redirect()->route('/.index');
+        return redirect()->route('index');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
+        $data = Pizzas::find($id);
 
+        if($data){
+            return view('actions.edit',[
+                'pizza' => $data
+            ]);
+        }
+        return redirect()->route('index');
     }
 
     /**
@@ -73,7 +80,32 @@ class CardapioController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $pedido = Pizzas::find($id);
+        if($pedido){
+            $data = $request->only([
+                'name',
+                'description',
+                'price'
+            ]);
+            $validator = Validator::make($data,[
+                'name' => ['required', 'string', 'max:100'],
+                'description' => ['required', 'string'],
+                'price' => ['required', 'string' , 'max:100']
+
+            ]);
+            if($validator->fails()){
+                return redirect()->route('cardapio.create')
+                                ->withErrors($validator)
+                                ->withInput();
+            }
+        }
+        $pedido->name = $data['name'];
+        $pedido->price = $data['price'];
+        $pedido->description = $data['description'];
+        $pedido->save();
+
+        return redirect()->route('cardapio.index');
+
     }
 
     /**
@@ -81,6 +113,9 @@ class CardapioController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Pizzas::find($id);
+        $data->delete();
+
+        return redirect()->route('cardapio.index');
     }
 }

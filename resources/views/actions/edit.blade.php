@@ -1,12 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Nova Pizza')
+@section('title', 'Editar usuário')
 
 @section('content_header')
     <h1>
-    Nova Pizza
+    Editar Pizza
     </h1>
 @endsection
+
 
 @section('content')
     @if ($errors->any())
@@ -26,33 +27,31 @@
     <div class="card">
         <div class="card-body">
 
-            <form action="{{route('cardapio.store')}}" method="POST" class="form-horizontal">
+            <form action="{{route('cardapio.update', [$pizza->id])}}" method="POST" class="form-horizontal">
+                @method('PUT')
                 @csrf
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Nome</label>
                     <div class="col-sm-10">
-                        <input type="text" name="name" value="{{old('name')}}" class="form-control @error('name') is-invalid @enderror">
+                        <input type="text" name="name" value="{{$pizza->name}}" class="form-control @error('title') is-invalid @enderror">
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Descrição</label>
                     <div class="col-sm-10">
-                        <textarea name="description" class="form-control" >{{old('description')}}</textarea>
-
+                        <input type="text" name="description" value="{{$pizza->description}}" class="form-control @error('title') is-invalid @enderror">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Preço</label>
+                    <label class="col-sm-2 col-form-label">valor</label>
                     <div class="col-sm-10">
-                        <input type="number" step="0.01" name="price" value="{{old('price')}}" class="form-control @error('price') is-invalid @enderror">
+                        <input  name="price" value="{{number_format((float)$pizza->price, 2, '.', '')}}" class="form-control @error('title') is-invalid @enderror">
                     </div>
                 </div>
-
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label"></label>
                     <div class="col-sm-10">
-                        <input type="submit" value="Criar" class="btn btn-success">
-                        <a href="{{route('cardapio.index')}}" class="btn btn-danger">Voltar</a>
+                        <input type="submit" value="Salvar" class="btn btn-success">
                     </div>
                 </div>
 
@@ -62,5 +61,6 @@
         </div>
 
     </div>
+
 
 @endsection

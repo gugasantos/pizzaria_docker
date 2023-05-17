@@ -26,7 +26,7 @@
     <div class="card">
         <div class="card-body">
 
-            <form action="{{route('cardapio.store')}}" method="POST" class="form-horizontal">
+            <form action="{{route('client.store')}}" method="POST" class="form-horizontal">
                 @csrf
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Nome</label>
@@ -35,16 +35,16 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Descrição</label>
+                    <label class="col-sm-2 col-form-label">Endereço</label>
                     <div class="col-sm-10">
-                        <textarea name="description" class="form-control" >{{old('description')}}</textarea>
+                        <textarea name="address" class="form-control" >{{old('address')}}</textarea>
 
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Preço</label>
+                    <label class="col-sm-2 col-form-label">Celular</label>
                     <div class="col-sm-10">
-                        <input type="number" step="0.01" name="price" value="{{old('price')}}" class="form-control @error('price') is-invalid @enderror">
+                        <input type="string" name="phoneNumber" value="{{old('phoneNumber"')}}" class="form-control @error('price') is-invalid @enderror">
                     </div>
                 </div>
 
@@ -52,7 +52,7 @@
                     <label class="col-sm-2 col-form-label"></label>
                     <div class="col-sm-10">
                         <input type="submit" value="Criar" class="btn btn-success">
-                        <a href="{{route('cardapio.index')}}" class="btn btn-danger">Voltar</a>
+                        <a href="{{route('client.index')}}" class="btn btn-danger">Voltar</a>
                     </div>
                 </div>
 

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ClientController extends Controller
 {
@@ -11,7 +13,11 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        $data = Client::paginate(10);
+
+        return view('actions.client',[
+            'clientes' => $data
+        ]);
     }
 
     /**
@@ -19,7 +25,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return view('actions.createClient');
     }
 
     /**
@@ -27,23 +33,49 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->only([
+            'name',
+            'address',
+            'phoneNumber'
+        ]);
+
+        $validator = Validator::make($data,[
+            'name' => ['required', 'string', 'max:100'],
+            'address' => ['required', 'string'],
+            'phoneNumber' => ['required', 'integer']
+        ]);
+
+        if($validator->fails()){
+            return redirect()->route('client.create')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+
+        $cliente = new Client;
+        $cliente->name = $data['name'];
+        $cliente->address = $data['address'];
+        $cliente->phoneNumber = $data['phoneNumber'];
+        $cliente->save();
+
+        return redirect()->route('client.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        $data = Client::find($id);
+
+        return view('actions.editClient',[
+            'cliente' => $data
+        ]);
+
+        return redirect()->route('client.index');
     }
 
     /**
@@ -51,7 +83,32 @@ class ClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $clientes = Client::find($id);
+        if($clientes){
+            $data = $request->only([
+                'name',
+                'address',
+                'phoneNumber'
+            ]);
+            $validator = Validator::make($data,[
+                'name' => ['required', 'string', 'max:100'],
+                'address' => ['required', 'string'],
+                'phoneNumber' => ['required', 'integer']
+
+            ]);
+            if($validator->fails()){
+                return redirect()->route('client.edit',[$clientes->id])
+                                ->withErrors($validator)
+                                ->withInput();
+            }
+        }
+        $clientes->name = $data['name'];
+        $clientes->address = $data['address'];
+        $clientes->phoneNumber = $data['phoneNumber'];
+        $clientes->save();
+
+        return redirect()->route('client.index');
+
     }
 
     /**
@@ -59,6 +116,9 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Client::find($id);
+        $data->delete();
+
+        return redirect()->route('client.index');
     }
 }
