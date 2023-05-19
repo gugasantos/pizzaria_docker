@@ -46,36 +46,29 @@ class PedidoController extends Controller
      */
     public function store(Request $request)
     {
+
         $data = $request->only([
             'client',
             'note',
             'pizzas',
             'price',
+            'borda',
 
 
         ]);
-        $validator = Validator::make($data,[
-            'client' => ['required', 'string', 'max:100'],
-            'note' => ['required', 'string', 'max:100'],
-            'pizzas' => ['required', 'string', 'max:100'],
-            'price' => ['required', 'string'],
-         ]);
 
-
-        if($validator->fails()){
-            return redirect()->route('pedido.create')
-                            ->withErrors($validator)
-                            ->withInput();
-        }
+        $idClient = Client::where('name', $data['client'])->first();
+        $idpizza = Pizzas::where('name', $data['pizzas'])->first();
 
         $pedido = new Pedido;
-        $pedido->name = $data['client'];
-        $pedido->pizza = $data['pizzas'];
-        $pedido->description = $data['note'];
+        $pedido->client = $idClient->id;
+        ##AS PIZZAS FORAM COLOCADAS COMO INTEGER POR SEREM FK TENHO QUE ACHAR UM JEITO DE ELAS MSM SENDO ARRAY IREM DE FORMA A CONTINUAR SENDO CONTABILIZADAS E NO FUTURO IR PRO DASHBOARD
+        $pedido->pizzas = implode(',',$data['pizzas']);
+        $pedido->note = $data['note'];
         $pedido->price = $data['price'];
 
         if($data['borda'] === 'op2'){
-            $pedido->borda = 1;
+            $pedido->edge = 1;
         }
         $pedido->save();
 

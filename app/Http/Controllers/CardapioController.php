@@ -57,7 +57,7 @@ class CardapioController extends Controller
         $pizza->description = $data['description'];
         $pizza->save();
 
-        return redirect()->route('index');
+        return redirect()->route('cardapio.index');
     }
 
     /**

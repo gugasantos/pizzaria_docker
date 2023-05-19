@@ -10,7 +10,8 @@
 
 
 @section('content')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.3/select2.min.css">
+
+
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -26,21 +27,6 @@
 
     @endif
 
-    <div>
-        <select style="width: 200px" id="nameid">
-            <option>Selecione o Cliente</option>
-            @foreach($client as $c )
-            <option>{{$c->name}}</option>
-            @endforeach
-        </select>
-        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.3/select2-bootstrap.min.css "></script>
-        <script type="text/javascript">
-            $('#nameid').selecet2({
-
-            })
-        </script>
-    </div>
 
     <div class="card">
         <div class="card-body">
@@ -50,27 +36,49 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Nome</label>
                     <div class="col-sm-10">
-                        <input type="text" name="client" value="{{old('name')}}" class="form-control @error('name') is-invalid @enderror">
+
+                    <select style="width: 1000px" class="js-example-basic-single col-sm-10 col-form-label" name="client">
+
+                            <option></option>
+                            @foreach($client as $p )
+                            <option>{{$p->name}}</option>
+                            @endforeach
+
+                        </select>
+                    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+                    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.3/select2.min.js"></script>
+                    <script>
+                        $('.js-example-basic-single').select2({
+                            placeholder:"Pesquise o cliente aqui",
+                            allowClear:true,
+                            matcher: function(term, text) { return text.toUpperCase().indexOf(term.toUpperCase())==0;}
+                        });
+                    </script>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.3/select2.min.css">
+
+
+
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Pizzas</label>
                     <div class="col-sm-10">
-                        <textarea name="pizzas" class="form-control" id='pizza' >{{old('pizza')}}</textarea>
-<!--<div>
-    <script>
-        function chaleira(){
-            document.getElementById('pizza')="aloha";
-        }
-    </script>
 
-    <select onclick="chaleira()">
-        @foreach ($lista as $pizza)
-            <option value="pizza">{{$pizza}}</option>
-        @endforeach
-    </select>
-</div>-->
+                        <select class="js-example-basic-multiple col-sm-10 col-form-label" name="pizzas[]"  multiple="multiple">
+                                @foreach($lista as $p )
+                                <option>{{$p}}</option>
+                                @endforeach
+
+                        </select>
+                        <script>
+                            $('.js-example-basic-multiple').select2({
+                                placeholder:"Pesquise a pizza aqui",
+                                matcher: function(term, text) { return text.toUpperCase().indexOf(term.toUpperCase())==0;}
+                            });
+                        </script>
+
+
                     </div>
                 </div>
 
