@@ -25,7 +25,7 @@
                 <tr>
                     <td>{{$cliente->name}}</td>
                     <td>{{$cliente->address}}</td>
-                    <td>{{$cliente->phone}}</td>
+                    <td>{{$cliente->phoneNumber}}</td>
                     <td>
                     <a href="{{route('client.edit',[$cliente->id])}}" class="btn btn-sm btn-info">Editar</a>
                         <form class="d-inline" action="{{route('client.destroy',[$cliente->id])}}" method="POST" onsubmit="return confirm('Tem certeza que deseja exluir esse cliente da pizzaria?')">

@@ -9,12 +9,23 @@ use Illuminate\Http\Request;
 
 class PedidoController extends Controller
 {
+    protected $pizzas;
+    protected $client;
+
+    protected $pedido;
+
+    public function __construct(Pizzas $pizzas, Client $client, Pedido $pedido)
+    {
+        $this->pizzas = $pizzas;
+        $this->client = $client;
+        $this->pedido = $pedido;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = Pedido::all();
+        $data = $this->pedido->all();
         //dd(Pedido::select('fineshed'));
 
         return view('actions.pedido',[
@@ -27,10 +38,11 @@ class PedidoController extends Controller
      */
     public function create()
     {
-        $client = Client::all();
+        $client = $this->client->all();
+
 
         $lista = array();
-        $ref = Pizzas::all();
+        $ref = $this->pizzas->all();
         foreach($ref as $r){
             array_push($lista,$r->name);
         }
@@ -57,20 +69,7 @@ class PedidoController extends Controller
 
         ]);
 
-        $idClient = Client::where('name', $data['client'])->first();
-        $idpizza = Pizzas::where('name', $data['pizzas'])->first();
-
-        $pedido = new Pedido;
-        $pedido->client = $idClient->id;
-        ##AS PIZZAS FORAM COLOCADAS COMO INTEGER POR SEREM FK TENHO QUE ACHAR UM JEITO DE ELAS MSM SENDO ARRAY IREM DE FORMA A CONTINUAR SENDO CONTABILIZADAS E NO FUTURO IR PRO DASHBOARD
-        $pedido->pizzas = implode(',',$data['pizzas']);
-        $pedido->note = $data['note'];
-        $pedido->price = $data['price'];
-
-        if($data['borda'] === 'op2'){
-            $pedido->edge = 1;
-        }
-        $pedido->save();
+        ##dd(json_encode($a));
 
         return redirect()->route('pedido.index');
     }

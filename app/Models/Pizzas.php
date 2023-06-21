@@ -12,6 +12,14 @@ class Pizzas extends Model
         'id', 'name', 'description','price'
     ];
 
+    #um pedido tem varias pizzas.
+
+    public function pedido(){
+
+        return $this->belongsTo(Pizzas::class, 'pizzas_id');
+
+    }
+
     public $timestamps = false;
     use HasFactory;
 }

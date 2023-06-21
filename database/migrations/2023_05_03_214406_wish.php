@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('wish', function (Blueprint $table) {
             $table->id();
-            $table->integer('pizzas');
-            $table->integer('client');
+            $table->string('pizzas');
+            $table->foreignId('client_id')->constrained('client','id');
             $table->string('note');
             $table->binary('edge');
             $table->integer('price');
             $table->dateTime('created_at');
 
-            $table->foreign('pizzas')->references('id')->on('menu');
-            $table->foreign('client')->references('id')->on('client');
+
+
         });
     }
 

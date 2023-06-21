@@ -41,7 +41,7 @@
 
                             <option></option>
                             @foreach($client as $p )
-                            <option>{{$p->name}}</option>
+                            <option value="{{$p->id}}">{{$p->name}}</option>
                             @endforeach
 
                         </select>
