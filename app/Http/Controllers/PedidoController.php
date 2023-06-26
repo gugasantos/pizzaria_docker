@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Models\Pedido;
 use App\Models\Pizzas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PedidoController extends Controller
 {
@@ -69,6 +70,32 @@ class PedidoController extends Controller
 
         ]);
 
+
+        $validator = Validator::make($data,[
+            'client' => ['required', 'string', 'max:100'],
+            'pizzas' => ['required'],
+            'price' => ['required', 'string'],
+         ]);
+
+         if($validator->fails()){
+            return redirect()->route('pedido.create')
+                            ->withErrors($validator)
+                            ->withInput();
+        }
+
+
+        $pedido = new Pedido;
+        $pedido->client_id = $data['client'];
+        $pedido->pizzas = implode($data['pizzas']);
+        $pedido->price = $data['price'];
+        $pedido->note = $data['note'];
+        if($data['borda'] === 'op2'){
+            $pedido->edge = true;
+        }
+        else{
+            $pedido->edge = false;
+        }
+        $pedido->save();
         ##dd(json_encode($a));
 
         return redirect()->route('pedido.index');

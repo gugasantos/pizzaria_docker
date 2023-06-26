@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('note');
             $table->binary('edge');
             $table->integer('price');
+            $table->dateTime('updated_at');
             $table->dateTime('created_at');
 
 
