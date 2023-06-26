@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-##Route::get('/', function () {
-##  return redirect()->route('pedido');
-##});
+Route::get('/', function () {
+  return redirect()->route('pedido.index');
+});
 
 Route::resource('cardapio',CardapioController::class);
 Route::resource('client',ClientController::class);

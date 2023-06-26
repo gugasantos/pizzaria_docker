@@ -27,10 +27,11 @@ class PedidoController extends Controller
     public function index()
     {
         $data = $this->pedido->all();
+        $data2 = $this->client->find($data[0]->client_id);
         //dd(Pedido::select('fineshed'));
-
         return view('actions.pedido',[
-            'pedidos' => $data
+            'pedidos' => $data,
+            'cliente' => $data2
         ]);
     }
 
@@ -86,7 +87,7 @@ class PedidoController extends Controller
 
         $pedido = new Pedido;
         $pedido->client_id = $data['client'];
-        $pedido->pizzas = implode($data['pizzas']);
+        $pedido->pizzas = implode(",",$data['pizzas']);
         $pedido->price = $data['price'];
         $pedido->note = $data['note'];
         if($data['borda'] === 'op2'){
