@@ -27,7 +27,8 @@ class PedidoController extends Controller
     public function index()
     {
         $data = $this->pedido->all();
-        $data2 = $this->client->find($data[0]->client_id);
+        $data2 = $this->client->all();
+
         //dd(Pedido::select('fineshed'));
         return view('actions.pedido',[
             'pedidos' => $data,
@@ -107,7 +108,12 @@ class PedidoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = Pedido::find($id);
+
+        $data->fineshed = 1;
+        $data->save();
+
+        return back();
     }
 
     /**
@@ -115,7 +121,23 @@ class PedidoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data = Pedido::find($id);
+        $client = $this->client->all();
+        $lista = array();
+        $ref = $this->pizzas->all();
+        foreach($ref as $r){
+            array_push($lista,$r->name);
+        }
+        sort($lista);
+
+        if($data){
+            return view('actions.editPedido',[
+                'pedido' => $data,
+                'client' => $client,
+                'lista' => $lista
+            ]);
+        }
+        return redirect()->route('index');
     }
 
     /**
@@ -123,7 +145,41 @@ class PedidoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $pedido = Pedido::find($id);
+
+        if($pedido){
+            $data = $request->only([
+            'client',
+            'note',
+            'pizzas',
+            'price',
+            'borda',
+            ]);
+            $validator = Validator::make($data,[
+                'client' => ['required', 'string', 'max:100'],
+                'pizzas' => ['required'],
+                'price' => ['required', 'string'],
+                ]);
+            if($validator->fails()){
+                return redirect()->route('pedido.edit')
+                                ->withErrors($validator)
+                                ->withInput();
+            }
+        }
+
+        $pedido->client_id = $data['client'];
+        $pedido->pizzas = implode(",",$data['pizzas']);
+        $pedido->price = $data['price'];
+        $pedido->note = $data['note'];
+        if($data['borda'] === 'op2'){
+            $pedido->edge = true;
+        }
+        else{
+            $pedido->edge = false;
+        }
+        $pedido->update();
+
+        return redirect()->route('pedido.index');
     }
 
     /**
@@ -131,6 +187,9 @@ class PedidoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Pedido::find($id);
+        $data->delete();
+
+        return redirect()->route('pedido.index');
     }
 }

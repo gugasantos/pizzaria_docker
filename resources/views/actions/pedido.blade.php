@@ -18,7 +18,7 @@
                 <thead>
                     <tr>
                         <th>Nome</th>
-                        <th>Endreço</th>
+                        <th>Endereço</th>
                         <th>Pizzas</th>
                         <th>Borda</th>
                         <th>Descrição</th>
@@ -30,8 +30,8 @@
 
                     @foreach ($pedidos as $pedido)
                             <tr>
-                                <td>{{$cliente->name}}</td>
-                                <td>{{$cliente->address}}</td>
+                                <td>{{$cliente->find(($pedido->client_id))->name}}</td>
+                                <td>{{$cliente->find(($pedido->client_id))->address}}</td>
                                 <td>{{$pedido->pizzas}}</td>
                                 @if ($pedido->edge == true)
                                     <td>Sim</td>
