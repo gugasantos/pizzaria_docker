@@ -32,7 +32,7 @@
                             <tr>
                                 <td>{{$cliente->find(($pedido->client_id))->name}}</td>
                                 <td>{{$cliente->find(($pedido->client_id))->address}}</td>
-                                <td>{{$pedido->pizzas}}</td>
+                                <td>{{$pizzasPedido->find(($pedido->pizzas_id))->pizzas_pedido_id}}</td>
                                 @if ($pedido->edge == true)
                                     <td>Sim</td>
                                 @else

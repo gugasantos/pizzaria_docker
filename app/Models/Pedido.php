@@ -15,9 +15,9 @@ class Pedido extends Model
     #um pedido tem varias pizzas
     #um cliente tem varios pedidos.
 
-    public function pizzas(){
+    public function PizzasPedido(){
 
-        return $this->hasMany(Pizzas::class, 'pizzas_id');
+        return $this->hasMany(Pizzas::class, 'pizzas_pedido_ids');
 
     }
 

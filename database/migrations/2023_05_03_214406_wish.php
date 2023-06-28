@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('wish', function (Blueprint $table) {
             $table->id();
-            $table->string('pizzas');
+            $table->foreignId('pizzas_id')->constrained('pizzas_pedido','id');
             $table->foreignId('client_id')->constrained('client','id');
             $table->string('note')->nullable();
             $table->binary('edge');
