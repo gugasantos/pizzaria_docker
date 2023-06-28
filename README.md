@@ -15,37 +15,37 @@ https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-o
 1. Clone this repository in your machine:
 
     ```bash
-    $ git clone https://github.com/gugasantos/pizzaria_docker.git
+    git clone https://github.com/gugasantos/pizzaria_docker.git
     ```
 
 2. create a copy of the .env:
     ```bash
-    $ cp .env.example .env
+    cp .env.example .env
     ```
 3. Run the stack:
     ```bash
-    $ docker-compose up -d
+    docker-compose up -d
     ```
 
 4. access the containe:
 
     ```bash
-    $ docker-compose exec pizzaria bash
+    docker-compose exec pizzaria bash
     ```
 5. run composer install :
 
     ```bash
-    $ composer install
+    composer install
     ```
 6. create key:
 
     ```bash
-    $ php artisan key:generate
+    php artisan key:generate
     ```
 7. run migration:
 
     ```bash
-    $ php artisan migrate
+    php artisan migrate
     ```
 
 8. Exit container and Access http://127.0.0.1:8000
