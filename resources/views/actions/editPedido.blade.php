@@ -67,8 +67,8 @@
                     <div class="col-sm-10">
 
                         <select class="js-example-basic-multiple col-sm-10 col-form-label" name="pizzas[]"  multiple="multiple">
-                                @foreach($lista as $p )
-                                <option>{{$p}}</option>
+                                @foreach($lista as $p)
+                                <option value="{{$p->id}}">{{$p->name}}</option>
                                 @endforeach
 
                         </select>
@@ -96,12 +96,6 @@
                     <div class="col-sm-10">
                         <textarea name="note" class="form-control" >{{$pedido->note}}</textarea>
 
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Preço Total</label>
-                    <div class="col-sm-10">
-                        <input type="number" step="0.01" name="price" value="{{$pedido->price}}" class="form-control @error('price') is-invalid @enderror">
                     </div>
                 </div>
 

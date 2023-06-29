@@ -47,16 +47,14 @@ class PedidoController extends Controller
     public function create()
     {
         $client = $this->client->all();
+        $pizzas = $this->pizzas->all();
 
-        $lista = array();
-        $ref = $this->pizzas->all();
-        foreach($ref as $r){
-            array_push($lista,$r->name);
-        }
-        sort($lista);
+
+        $lista = $this->pizzas->all();
+
         return view('actions.createPedido',[
             'lista' => $lista,
-            'client' => $client
+            'client' => $client,
         ]);
     }
 
@@ -70,7 +68,6 @@ class PedidoController extends Controller
             'client',
             'note',
             'pizzas',
-            'price',
             'borda',
 
 
@@ -80,7 +77,6 @@ class PedidoController extends Controller
         $validator = Validator::make($data,[
             'client' => ['required', 'string', 'max:100'],
             'pizzas' => ['required'],
-            'price' => ['required', 'string'],
          ]);
 
          if($validator->fails()){
@@ -89,24 +85,46 @@ class PedidoController extends Controller
                             ->withInput();
         }
 
-
+        $pizzas = new Pizzas;
         $pizzasPedido = new PizzasPedido;
+
+        #inclui os id das pizzas na tabela pizzas_pedido coluna pizzas_pedido_id
         $pizzasPedido->pizzas_pedido_id = implode(',',$data['pizzas']);
+
+
+        $namePizza = array();
+        $valuePizza = array();
+
+
+        foreach ($data['pizzas'] as $p){
+            array_push($namePizza, $pizzas->find($p)->name);
+            array_push($valuePizza, $pizzas->find($p)->price);
+        };
+
+        #inclui os nomes das pizzas na tabela pizzas_pedido coluna namePizzas
+        $pizzasPedido->namePizzas = implode(',',$namePizza);
         $pizzasPedido->save();
+
 
         $pedido = new Pedido;
         $pedido->client_id = $data['client'];
+        #inclui o id da tabela pizza_pedido na tabela wish na coluna pizzas_id
         $pedido->pizzas_id = $pizzasPedido->id;
-        $pedido->price = $data['price'];
         $pedido->note = $data['note'];
+
         if($data['borda'] === 'op2'){
             $pedido->edge = true;
+
+            #valor da borda
+            array_push($valuePizza, "2");
         }
         else{
             $pedido->edge = false;
         }
+
+        $pedido->price = array_sum($valuePizza);
         $pedido->save();
-        ##dd(json_encode($a));
+
 
         return redirect()->route('pedido.index');
     }
@@ -131,12 +149,8 @@ class PedidoController extends Controller
     {
         $data = Pedido::find($id);
         $client = $this->client->all();
-        $lista = array();
-        $ref = $this->pizzas->all();
-        foreach($ref as $r){
-            array_push($lista,$r->name);
-        }
-        sort($lista);
+
+        $lista = $this->pizzas->all();
 
         if($data){
             return view('actions.editPedido',[
@@ -166,7 +180,6 @@ class PedidoController extends Controller
             $validator = Validator::make($data,[
                 'client' => ['required', 'string', 'max:100'],
                 'pizzas' => ['required'],
-                'price' => ['required', 'string'],
                 ]);
             if($validator->fails()){
                 return redirect()->route('pedido.edit')
@@ -175,17 +188,47 @@ class PedidoController extends Controller
             }
         }
 
+
+        $pizzas = new Pizzas;
+        $pizzasPedido = PizzasPedido::find($pedido->pizzas_id);
+
+        #inclui os id das pizzas na tabela pizzas_pedido coluna pizzas_pedido_id
+        $pizzasPedido->pizzas_pedido_id = implode(',',$data['pizzas']);
+
+
+        $namePizza = array();
+        $valuePizza = array();
+
+
+        foreach ($data['pizzas'] as $p){
+            array_push($namePizza, $pizzas->find($p)->name);
+            array_push($valuePizza, $pizzas->find($p)->price);
+        };
+
+        #inclui os nomes das pizzas na tabela pizzas_pedido coluna namePizzas
+        $pizzasPedido->namePizzas = implode(',',$namePizza);
+        $pizzasPedido->update();
+
+
         $pedido->client_id = $data['client'];
-        $pedido->pizzas = implode(",",$data['pizzas']);
-        $pedido->price = $data['price'];
+        #inclui o id da tabela pizza_pedido na tabela wish na coluna pizzas_id
+        $pedido->pizzas_id = $pizzasPedido->id;
         $pedido->note = $data['note'];
+
         if($data['borda'] === 'op2'){
             $pedido->edge = true;
+
+            #valor da borda
+            array_push($valuePizza, "2");
         }
         else{
             $pedido->edge = false;
         }
+
+        $pedido->price = array_sum($valuePizza);
+
         $pedido->update();
+
 
         return redirect()->route('pedido.index');
     }

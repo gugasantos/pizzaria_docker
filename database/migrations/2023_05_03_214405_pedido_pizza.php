@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('pizzas_pedido', function (Blueprint $table) {
             $table->id();
             $table->string('pizzas_pedido_id');
+            $table->string('namePizzas');
 
         });
     }

@@ -88,12 +88,11 @@ class CardapioController extends Controller
             ]);
             $validator = Validator::make($data,[
                 'name' => ['required', 'string', 'max:100'],
-                'description' => ['required', 'string'],
                 'price' => ['required', 'string' , 'max:100']
 
             ]);
             if($validator->fails()){
-                return redirect()->route('cardapio.create')
+                return redirect()->route('cardapio.edit')
                                 ->withErrors($validator)
                                 ->withInput();
             }
@@ -101,7 +100,7 @@ class CardapioController extends Controller
         $pedido->name = $data['name'];
         $pedido->price = $data['price'];
         $pedido->description = $data['description'];
-        $pedido->save();
+        $pedido->update();
 
         return redirect()->route('cardapio.index');
 
