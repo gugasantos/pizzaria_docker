@@ -9,7 +9,7 @@ class Pedido extends Model
 {
     protected $table = 'wish';
     protected $fillable = [
-        'id', 'pizzas', 'client', 'note', 'edge','price'
+        'id', 'pizzas', 'client', 'note','fineshed', 'edge','price'
     ];
 
     #um pedido tem varias pizzas

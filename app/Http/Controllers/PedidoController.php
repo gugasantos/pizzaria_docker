@@ -33,7 +33,7 @@ class PedidoController extends Controller
         $data = $this->pedido->all();
         $data2 = $this->client->all();
         $data3 = $this->pizzas_pedido->all();
-        //dd(Pedido::select('fineshed'));
+        //dd(Pedido::select('finalizado'));
         return view('actions.pedido',[
             'pedidos' => $data,
             'cliente' => $data2,
@@ -123,6 +123,7 @@ class PedidoController extends Controller
         }
 
         $pedido->price = array_sum($valuePizza);
+        $pedido->finalizado = true;
         $pedido->save();
 
 
@@ -136,7 +137,8 @@ class PedidoController extends Controller
     {
         $data = Pedido::find($id);
 
-        $data->fineshed = 1;
+        $data->finalizado = false;
+
         $data->save();
 
         return back();

@@ -29,6 +29,8 @@
                 <tbody>
 
                     @foreach ($pedidos as $pedido)
+
+                        @if (($pedido->finalizado) == true)
                             <tr>
                                 <td>{{$cliente->find(($pedido->client_id))->name}}</td>
                                 <td>{{$cliente->find(($pedido->client_id))->address}}</td>
@@ -54,6 +56,8 @@
                                     </form>
                                 </td>
                             </tr>
+                        @endif
+
                     @endforeach
                 </tbody>
 

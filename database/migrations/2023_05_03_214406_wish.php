@@ -16,8 +16,9 @@ return new class extends Migration
             $table->foreignId('pizzas_id')->constrained('pizzas_pedido','id');
             $table->foreignId('client_id')->constrained('client','id');
             $table->string('note')->nullable();
-            $table->binary('edge');
+            $table->boolean('edge');
             $table->integer('price');
+            $table->boolean('finalizado');
             $table->dateTime('updated_at');
             $table->dateTime('created_at');
 
