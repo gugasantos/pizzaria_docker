@@ -42,20 +42,31 @@ class ClientController extends Controller
         $validator = Validator::make($data,[
             'name' => ['required', 'string', 'max:100'],
             'address' => ['required', 'string'],
-            'phoneNumber' => ['required', 'integer']
+            'phoneNumber' => ['required']
         ]);
 
         if($validator->fails()){
             return redirect()->route('client.create')
                             ->withErrors($validator)
                             ->withInput();
-        }
+        };
 
         $cliente = new Client;
         $cliente->name = $data['name'];
         $cliente->address = $data['address'];
         $cliente->phoneNumber = $data['phoneNumber'];
-        $cliente->save();
+
+        $validator = 'Cliente já está cadastrado';
+
+        if($cliente->where('name', $data['name'])->count() == 0){
+            $cliente->save();
+        }
+        else{
+            return redirect()->route('client.create')
+                            ->withErrors($validator)
+                            ->withInput();
+        };
+
 
         return redirect()->route('client.index');
     }
