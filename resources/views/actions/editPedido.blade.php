@@ -35,7 +35,7 @@
                 @method('PUT')
                 @csrf
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Nome</label>
+                    <label class="col-sm-2 col-form-label">Nome TESTE</label>
                     <div class="col-sm-10">
 
                     <select style="width: 1000px" class="js-example-basic-single col-sm-10 col-form-label" name="client">
