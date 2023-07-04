@@ -31,7 +31,7 @@
                     <p>Pizzas</p>
                 </div>
                 <div class='icon'>
-                    <i class="far fa-fw fa-eye"></i>
+                    <i class="fas fa-pizza-slice"></i>
                 </div>
             </div>
         </div>
@@ -42,7 +42,7 @@
                     <p>Clientes</p>
                 </div>
                 <div class='icon'>
-                    <i class="far fa-fw fa-eye"></i>
+                    <i class="far fa-fw fa-user"></i>
                 </div>
             </div>
         </div>
@@ -53,18 +53,18 @@
                     <p>Pizzas Vendidas</p>
                 </div>
                 <div class='icon'>
-                    <i class="far fa-fw fa-eye"></i>
+                    <i class="fas fa-shopping-cart"></i>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="small-box bg-danger">
                 <div class='inner'>
-                    <h3>{{$price}}</h3>
-                    <p>Lucro</p>
+                    <h3>R$ {{number_format((float) $price, 2, ',', '')}}</h3>
+                    <p>Receita</p>
                 </div>
                 <div class='icon'>
-                    <i class="far fa-fw fa-eye"></i>
+                    <i class="fas fa-money-bill-alt"></i>
                 </div>
             </div>
         </div>
@@ -101,7 +101,14 @@
             data:{
                 datasets:[{
                     data:{{$pageValues}},
-                    backgroundColor: '#0000FF'
+                    backgroundColor: [
+                    'rgb(255, 0, 80)',
+                    'rgb(54, 162, 235)',
+                    'rgb(255, 205, 86)',
+                    'rgb(25, 205, 86)',
+                    'rgb(153, 51, 153)'
+
+                    ],
                 }],
                 labels:{!!$pageLabels!!}
             },
