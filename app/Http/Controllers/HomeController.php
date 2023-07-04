@@ -30,13 +30,26 @@ class HomeController extends Controller
         foreach($lucrocount as $p){
             array_push($price, $p->price);
         }
-
         $pagePie = [];
-        $pizzascount = PizzasPedido::selectRaw('pizzas_pedido_id, count(pizzas_pedido_id) as p')->groupBy('pizzas_pedido_id')->get();
+        $pizzascount = PizzasPedido::all()->where('created_at','>=',$datelimit);
+
         foreach($pizzascount as $pizzacount){
-            $pagePie[ $pizzacount['pizzas_pedido_id']] = intval($pizzacount['p']);
+            $p = ($pizzacount->namePizzas);
+
+            if(strlen($p) == 1){
+                array_push($pagePie,$pizzacount['namePizzas']);
+            }
+            else{
+                $pizzasc = explode(',',$pizzacount['namePizzas']);
+                foreach($pizzasc as $c){
+                    array_push($pagePie,$c);
+                }
+            }
+
 
         };
+        $pagePie = array_count_values($pagePie);
+
 
         $pageLabels = json_encode( array_keys($pagePie));
         $pageValues = json_encode( array_values($pagePie));

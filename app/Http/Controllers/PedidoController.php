@@ -103,6 +103,7 @@ class PedidoController extends Controller
 
         #inclui os nomes das pizzas na tabela pizzas_pedido coluna namePizzas
         $pizzasPedido->namePizzas = implode(',',$namePizza);
+
         $pizzasPedido->save();
 
 
@@ -241,7 +242,10 @@ class PedidoController extends Controller
     public function destroy(string $id)
     {
         $data = Pedido::find($id);
+        $data2 = PizzasPedido::find($data->pizzas_id);
+
         $data->delete();
+        $data2->delete();
 
         return redirect()->route('pedido.index');
     }

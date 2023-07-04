@@ -20,7 +20,5 @@ class PizzasPedido extends Model
         return $this->belongsTo(Pizzas::class, 'pizzas_id');
 
     }
-
-    public $timestamps = false;
     use HasFactory;
 }

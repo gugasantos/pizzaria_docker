@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('pizzas_pedido_id');
             $table->string('namePizzas');
+            $table->dateTime('updated_at');
+            $table->dateTime('created_at');
 
         });
     }
