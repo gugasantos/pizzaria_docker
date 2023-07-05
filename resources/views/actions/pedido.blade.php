@@ -19,6 +19,7 @@
                     <tr>
                         <th>Nome</th>
                         <th>Endereço</th>
+                        <th>Telefone</th>
                         <th>Pizzas</th>
                         <th>Borda</th>
                         <th>Descrição</th>
@@ -27,13 +28,14 @@
                     </tr>
                 </thead>
                 <tbody>
-
                     @foreach ($pedidos as $pedido)
 
                         @if (($pedido->finalizado) == true)
+
                             <tr>
                                 <td>{{$cliente->find(($pedido->client_id))->name}}</td>
                                 <td>{{$cliente->find(($pedido->client_id))->address}}</td>
+                                <td>{{$cliente->find(($pedido->client_id))->phoneNumber}}</td>
                                 <td>{{$pizzasPedido->find(($pedido->pizzas_id))->namePizzas}}</td>
                                 @if ($pedido->edge == true)
                                     <td>Sim</td>
@@ -66,4 +68,15 @@
         </div>
     </div>
 
+    <script>
+        document.getElementById('botao-copiar').addEventListener('click', function() {
+            var texto = document.getElementById('texto');
+
+            texto.select();
+            texto.setSelectionRange(0, 99999); // Para dispositivos móveis
+            document.execCommand('copy');
+
+            alert('Texto copiado com sucesso!');
+        });
+    </script>
 @endsection

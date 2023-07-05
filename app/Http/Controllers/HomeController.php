@@ -45,14 +45,24 @@ class HomeController extends Controller
                     array_push($pagePie,$c);
                 }
             }
-
-
         };
+
         $pagePie = array_count_values($pagePie);
 
 
         $pageLabels = json_encode( array_keys($pagePie));
         $pageValues = json_encode( array_values($pagePie));
+
+
+        $pageBar = [];
+        $clientesCount = Client::orderBy('numberOfOrders','desc')->limit(5)->get();
+
+        foreach($clientesCount as $c){
+            $pageBar[$c->name] = $c->numberOfOrders;
+        };
+
+        $pageBarLabels = json_encode( array_keys($pageBar));
+        $pageBarValues = json_encode( array_values($pageBar));
 
         return view('actions.home',[
             'pizzas' => $pizza->count(),
@@ -61,6 +71,8 @@ class HomeController extends Controller
             'price' => array_sum($price),
             'pageLabels' =>  $pageLabels,
             'pageValues' =>  $pageValues,
+            'pageBarLabels'=> $pageBarLabels,
+            'pageBarValues'=> $pageBarValues,
             'dataInterval' => $interval,
             'days' => $day
 

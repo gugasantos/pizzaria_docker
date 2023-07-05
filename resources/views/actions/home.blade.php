@@ -77,7 +77,7 @@
                     <h2 class="card-title">Pizzas mais compradas</h2>
                 </div>
                 <div class="card-body">
-                    <canvas id="pagePie">teste</canvas>
+                    <canvas id="pagePie"></canvas>
                 </div>
             </div>
         </div>
@@ -87,7 +87,7 @@
                     <h2 class="card-title">Clientes mais fiéis</h2>
                 </div>
                 <div class="card-body">
-                    ...
+                    <canvas id="pageBar"></canvas>
                 </div>
             </div>
         </div>
@@ -97,7 +97,7 @@
     window.onload = function(){
         let ctx = document.getElementById('pagePie').getContext('2d');
         window.pagePie = new Chart(ctx, {
-            type:'pie',
+            type:'doughnut',
             data:{
                 datasets:[{
                     data:{{$pageValues}},
@@ -115,11 +115,51 @@
             options:{
                 responsive:true,
                 legend:{
-                    display:false
+                    display:true
                 }
             }
         });
     }
+
+    window.addEventListener('load', function(){
+        let ctx2 = document.getElementById('pageBar').getContext('2d');
+        window.pageBar = new Chart(ctx2, {
+            type:'bar',
+            data:{
+                datasets:[{
+                    label: 'Pedidos',
+                    data:{{$pageBarValues}} ,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 159, 64, 0.2)',
+                        'rgba(255, 205, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(201, 203, 207, 0.2)'
+
+                    ],
+                    borderColor: [
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 159, 64)',
+                        'rgb(255, 205, 86)',
+                        'rgb(75, 192, 192)',
+                        'rgb(54, 162, 235)',
+                        'rgb(153, 102, 255)',
+                        'rgb(201, 203, 207)'
+                        ],
+                    borderWidth: 1
+                }],
+                labels:{!!$pageBarLabels!!}
+            },
+            options:{
+                responsive:true,
+                legend:{
+                    display:false
+                }
+            }
+        });
+    })
 </script>
 
 @endsection

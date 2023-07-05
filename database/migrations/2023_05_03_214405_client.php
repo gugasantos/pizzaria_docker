@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('address');
             $table->string('phoneNumber');
-            $table->integer('numberOfOrders')->nullable();
+            $table->integer('numberOfOrders')->default(0);
         });
     }
 

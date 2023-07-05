@@ -58,7 +58,7 @@ class ClientController extends Controller
 
         $validator = 'Cliente já está cadastrado';
 
-        if($cliente->where('name', $data['name'])->count() == 0){
+        if($cliente->where('phoneNumber', $data['phoneNumber'])->count() == 0){
             $cliente->save();
         }
         else{
@@ -66,7 +66,6 @@ class ClientController extends Controller
                             ->withErrors($validator)
                             ->withInput();
         };
-
 
         return redirect()->route('client.index');
     }
@@ -116,6 +115,7 @@ class ClientController extends Controller
         $clientes->name = $data['name'];
         $clientes->address = $data['address'];
         $clientes->phoneNumber = $data['phoneNumber'];
+
         $clientes->save();
 
         return redirect()->route('client.index');

@@ -125,6 +125,11 @@ class PedidoController extends Controller
 
         $pedido->price = array_sum($valuePizza);
         $pedido->finalizado = true;
+
+        $cliente = Client::find($data['client']);
+
+        $cliente->increment('numberOfOrders');
+
         $pedido->save();
 
 
