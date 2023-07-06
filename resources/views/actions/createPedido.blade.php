@@ -4,7 +4,7 @@
 
 @section('content_header')
     <h1>
-    Nova Pedido
+        Nova Pedido
     </h1>
 @endsection
 
@@ -19,8 +19,8 @@
                     <i class="icon fas fa-ban"></i>
                     Ocorreu um erro
                 </h5>
-                @foreach ($errors->all() as $error )
-                    <li>{{$error}}</li>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
                 @endforeach
             </ul>
         </div>
@@ -31,30 +31,31 @@
     <div class="card">
         <div class="card-body">
 
-            <form action="{{route('pedido.store')}}" method="POST" class="form-horizontal">
+            <form action="{{ route('pedido.store') }}" method="POST" class="form-horizontal">
                 @csrf
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Nome</label>
                     <div class="col-sm-10">
 
-                    <select style="width: 1000px" class="js-example-basic-single col-sm-10 col-form-label" name="client">
+                        <select class="js-example-basic-single col-sm-8 col-form-label" name="client">
 
                             <option></option>
-                            @foreach($client as $p )
-                            <option value="{{$p->id}}">{{$p->name}}</option>
+                            @foreach ($client as $p)
+                                <option value="{{ $p->id }}">{{ $p->name }}</option>
                             @endforeach
 
                         </select>
-                    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-                    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.3/select2.min.js"></script>
-                    <script>
-                        $('.js-example-basic-single').select2({
-                            placeholder:"Pesquise o cliente aqui",
-                            allowClear:true,
-                            matcher: function(term, text) { return text.toUpperCase().indexOf(term.toUpperCase())==0;}
-                        });
-                    </script>
-                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.3/select2.min.css">
+                        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+                        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+                        <script>
+                            $('.js-example-basic-single').select2({
+                                placeholder: "Pesquise o cliente aqui",
+                                allowClear: true,
+
+                            });
+                        </script>
+                        <link rel="stylesheet"
+                            href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
 
 
 
@@ -65,18 +66,70 @@
                     <label class="col-sm-2 col-form-label">Pizzas</label>
                     <div class="col-sm-10">
 
-                        <select class="js-example-basic-multiple col-sm-10 col-form-label" name="pizzas[]"  multiple="multiple">
-                                @foreach($lista as $l )
+                        <select class="js-states js-example-events form-control" name="pizzas[]" multiple="multiple">
+                            @foreach($lista as $l )
+                            <option value="{{$l->id}}">{{$l->name}}</option>
+                            @endforeach
 
-                                <option value="{{$l->id}}">{{$l->name}}</option>
-
-                                @endforeach
-
-                        </select>
+                          </select>
                         <script>
-                            $('.js-example-basic-multiple').select2({
-                                placeholder:"Pesquise a pizza aqui",
-                                matcher: function(term, text) { return text.toUpperCase().indexOf(term.toUpperCase())==0;}
+                            var $eventLog = $(".js-event-log");
+                            var $eventSelect = $(".js-example-events");
+
+                            $.fn.select2.defaults.set("width", "50%");
+
+                            $eventSelect.on("select2:open", function(e) {
+                                log("select2:open", e);
+                            });
+                            $eventSelect.on("select2:close", function(e) {
+                                log("select2:close", e);
+                            });
+                            $eventSelect.on("change", function(e) {
+                                log("change");
+                            });
+
+                            $eventSelect.on("select2:select", function(e) {
+                                log("select2:select", e);
+                                $eventSelect.append('<option value="' + e.params.data.text + '">' + e.params.data.text + '</option>');
+                            });
+                            $eventSelect.on("select2:unselect", function(e) {
+                                log("select2:unselect", e);
+                                e.params.data.element.remove();
+                            });
+
+                            function log(name, evt) {
+                                if (!evt) {
+                                    var args = "{}";
+                                } else {
+                                    var args = JSON.stringify(evt.params, function(key, value) {
+                                        if (value && value.nodeName) return "[DOM node]";
+                                        if (value instanceof $.Event) return "[$.Event]";
+                                        return value;
+                                    });
+                                }
+                                var $e = $("<li>" + name + " -> " + args + "</li>");
+                                $eventLog.append($e);
+                                $e.animate({
+                                    opacity: 1
+                                }, 50000, 'linear', function() {
+                                    $e.animate({
+                                        opacity: 0
+                                    }, 2000, 'linear', function() {
+                                        $e.remove();
+                                    });
+                                });
+                            }
+
+                            function formatResultData(data) {
+                                if (!data.id) return data.text;
+                                if (data.element.selected) return
+                                return data.text;
+                            };
+
+                            $eventSelect.select2({
+                                templateResult: formatResultData,
+                                placeholder: "Pesquise a pizza aqui",
+                                allowClear: true,
                             });
                         </script>
 
@@ -87,15 +140,15 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Borda</label>
                     <div class="col-sm-10">
-                        <input type="radio" value="op1" name = "borda" checked> Não
-                        <input type="radio" value="op2" name = "borda"> Sim
+                        <input type="radio" value="op1" name="borda" checked> Não
+                        <input type="radio" value="op2" name="borda"> Sim
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Descrição</label>
                     <div class="col-sm-10">
-                        <textarea name="note" class="form-control" >{{old('description')}}</textarea>
+                        <textarea name="note" class="form-control">{{ old('description') }}</textarea>
 
                     </div>
                 </div>
@@ -104,7 +157,7 @@
                     <label class="col-sm-2 col-form-label"></label>
                     <div class="col-sm-10">
                         <input type="submit" value="Criar" class="btn btn-success">
-                        <a href="{{route('pedido.index')}}" class="btn btn-danger">Voltar</a>
+                        <a href="{{ route('pedido.index') }}" class="btn btn-danger">Voltar</a>
                     </div>
                 </div>
 

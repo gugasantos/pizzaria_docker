@@ -13,23 +13,21 @@
 @section('content')
 
     <div class="card">
-        <div class="card-body">
+        <div class="table-responsive-sm card-body">
             <table class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Nome</th>
+                        <th >Nome</th>
                         <th>Endereço</th>
                         <th>Telefone</th>
                         <th>Pizzas</th>
                         <th>Borda</th>
                         <th>Descrição</th>
                         <th>Valor total</th>
-                        <th width='200'>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($pedidos as $pedido)
-
                         @if (($pedido->finalizado) == true)
 
                             <tr>
@@ -42,7 +40,6 @@
                                 @else
                                     <td>Não</td>
                                 @endif
-
                                 <td>{{ $pedido->note }}</td>
                                 <td>R$ {{ number_format((float) $pedido->price, 2, ',', '') }}</td>
                                 <td>
@@ -62,21 +59,9 @@
 
                     @endforeach
                 </tbody>
-
-
             </table>
         </div>
     </div>
 
-    <script>
-        document.getElementById('botao-copiar').addEventListener('click', function() {
-            var texto = document.getElementById('texto');
 
-            texto.select();
-            texto.setSelectionRange(0, 99999); // Para dispositivos móveis
-            document.execCommand('copy');
-
-            alert('Texto copiado com sucesso!');
-        });
-    </script>
 @endsection

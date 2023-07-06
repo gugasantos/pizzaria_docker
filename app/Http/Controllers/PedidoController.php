@@ -69,8 +69,6 @@ class PedidoController extends Controller
             'note',
             'pizzas',
             'borda',
-
-
         ]);
 
 
@@ -113,11 +111,12 @@ class PedidoController extends Controller
         $pedido->pizzas_id = $pizzasPedido->id;
         $pedido->note = $data['note'];
 
+
         if($data['borda'] === 'op2'){
             $pedido->edge = true;
 
             #valor da borda
-            array_push($valuePizza, "2");
+            array_push($valuePizza, '2');
         }
         else{
             $pedido->edge = false;

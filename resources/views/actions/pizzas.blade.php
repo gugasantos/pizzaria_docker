@@ -10,7 +10,7 @@
 @section('content')
 
 <div class="card">
-    <div class="card-body">
+    <div class="table-responsive-sm card-body">
         <table class="table table-hover">
             <thead>
                 <tr>
