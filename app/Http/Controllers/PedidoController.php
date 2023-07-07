@@ -69,8 +69,8 @@ class PedidoController extends Controller
             'note',
             'pizzas',
             'borda',
+            'nborda'
         ]);
-
 
         $validator = Validator::make($data,[
             'client' => ['required', 'string', 'max:100'],
@@ -134,7 +134,7 @@ class PedidoController extends Controller
             $pedido->edge = true;
 
             #valor da borda
-            array_push($valuePizza, '2');
+            array_push($valuePizza, strval(2*intval($data['nborda'])));
         }
         else{
             $pedido->edge = false;

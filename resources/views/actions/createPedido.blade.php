@@ -140,8 +140,18 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Borda</label>
                     <div class="col-sm-10">
-                        <input type="radio" value="op1" name="borda" checked> Não
-                        <input type="radio" value="op2" name="borda"> Sim
+                        <select name="borda" id="borda">
+                            <option value="op1">Não</option>
+                            <option value="op2">Sim</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row" id="qtborda">
+                    <label class="col-sm-2 col-form-label">Quantidade de pizza com borda</label>
+                    <div class="col-sm-10">
+                        <input type="number" name = 'nborda' value = '1' class="form-control" style="width:5rem">
+
                     </div>
                 </div>
 
@@ -167,5 +177,19 @@
         </div>
 
     </div>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#qtborda').hide();
+        $('#borda').change(function() {
+             if ($('#borda').val() == 'op2') {
+                $('#qtborda').show();
+            } else {
+                $('#qtborda').hide();
+            }
+        });
+    });
+</script>
 
 @endsection
