@@ -10,7 +10,7 @@ class PizzasPedido extends Model
     protected $table = 'pizzas_pedido';
 
     protected $fillable = [
-        'id', 'pizzas_pedido_id'
+        'id', 'pizzas_pedido_id','namePizzas'
     ];
 
     #um pedido tem varias pizzas.

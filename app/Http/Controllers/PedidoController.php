@@ -87,14 +87,32 @@ class PedidoController extends Controller
         $pizzasPedido = new PizzasPedido;
 
         #inclui os id das pizzas na tabela pizzas_pedido coluna pizzas_pedido_id
-        $pizzasPedido->pizzas_pedido_id = implode(',',$data['pizzas']);
+        $datapizzas = [];
+        foreach($data['pizzas'] as $p){
+            if(intval($p) == 0){
+                $t = $pizzas->where('name',$p)->get('id');
+                $p = $t[0]->id;
+                array_push($datapizzas, strval($p));
+            }else{
+                array_push($datapizzas, $p);
+            }
+        }
+        if(empty($datapizzas)){
+            $pizzasPedido->pizzas_pedido_id = implode(',',$data['pizzas']);
+        }
+        else{
+            $pizzasPedido->pizzas_pedido_id = implode(',',$datapizzas);
+        }
+
 
 
         $namePizza = array();
         $valuePizza = array();
-
-
         foreach ($data['pizzas'] as $p){
+            if(intval($p) == 0){
+                $t = $pizzas->where('name', $p)->get('id');
+                $p = $t[0]->id;
+            }
             array_push($namePizza, $pizzas->find($p)->name);
             array_push($valuePizza, $pizzas->find($p)->price);
         };
