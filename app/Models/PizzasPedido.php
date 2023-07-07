@@ -17,7 +17,7 @@ class PizzasPedido extends Model
 
     public function pedido(){
 
-        return $this->belongsTo(Pizzas::class, 'pizzas_id');
+        return $this->belongsTo(Pizzas::class, 'pizzas_pedido_id');
 
     }
     use HasFactory;

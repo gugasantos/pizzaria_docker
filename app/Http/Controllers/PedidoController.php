@@ -125,8 +125,8 @@ class PedidoController extends Controller
 
         $pedido = new Pedido;
         $pedido->client_id = $data['client'];
-        #inclui o id da tabela pizza_pedido na tabela wish na coluna pizzas_id
-        $pedido->pizzas_id = $pizzasPedido->id;
+        #inclui o id da tabela pizza_pedido na tabela wish na coluna pizzas_pedido_id
+        $pedido->pizzas_pedido_id = $pizzasPedido->id;
         $pedido->note = $data['note'];
 
 
@@ -215,7 +215,7 @@ class PedidoController extends Controller
 
 
         $pizzas = new Pizzas;
-        $pizzasPedido = PizzasPedido::find($pedido->pizzas_id);
+        $pizzasPedido = PizzasPedido::find($pedido->pizzas_pedido_id);
 
         #inclui os id das pizzas na tabela pizzas_pedido coluna pizzas_pedido_id
         $pizzasPedido->pizzas_pedido_id = implode(',',$data['pizzas']);
@@ -236,8 +236,8 @@ class PedidoController extends Controller
 
 
         $pedido->client_id = $data['client'];
-        #inclui o id da tabela pizza_pedido na tabela wish na coluna pizzas_id
-        $pedido->pizzas_id = $pizzasPedido->id;
+        #inclui o id da tabela pizza_pedido na tabela wish na coluna pizzas_pedido_id
+        $pedido->pizzas_pedido_id = $pizzasPedido->id;
         $pedido->note = $data['note'];
 
         if($data['borda'] === 'op2'){
@@ -264,7 +264,7 @@ class PedidoController extends Controller
     public function destroy(string $id)
     {
         $data = Pedido::find($id);
-        $data2 = PizzasPedido::find($data->pizzas_id);
+        $data2 = PizzasPedido::find($data->pizzas_pedido_id);
 
         $data->delete();
         $data2->delete();
