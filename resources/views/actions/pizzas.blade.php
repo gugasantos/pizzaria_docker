@@ -10,6 +10,12 @@
 @section('content')
 
 <div class="card">
+    <form action="cardapio" method="GET">
+        <input type="text" id="search" name="search" class="form-control" placeholder="Procurar Produto">
+    </form>
+</div>
+
+<div class="card">
     <div class="table-responsive-sm card-body">
         <table class="table table-hover">
             <thead>
@@ -42,5 +48,5 @@
         </table>
     </div>
 </div>
-    {{$pizzas->links('pagination::bootstrap-4') }}
+
 @endsection

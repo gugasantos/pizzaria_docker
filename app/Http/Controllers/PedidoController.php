@@ -30,14 +30,42 @@ class PedidoController extends Controller
      */
     public function index()
     {
-        $data = $this->pedido->all();
-        $data2 = $this->client->all();
-        $data3 = $this->pizzas_pedido->all();
+
+
+        $search = request('search');
+
+        $c = Client::where('name', 'like', '%'.$search.'%')->get('id');
+
+        $validator = "Usuário não encontrado";
+        if($search){
+            if($c->count() == 0){
+                return redirect()->route('pedido.index')
+                                ->withErrors($validator)
+                                ->withInput();
+            }else{
+                $data = Pedido::where(
+                    'client_id', $c[0]->id
+                )->get();
+
+                $data2 = Client::where(
+                    'id', $c[0]->id
+                )->get();
+
+                $data3 = $this->pizzas_pedido->all();
+            }
+        }
+        else{
+            $data2 = $this->client->all();
+            $data = $this->pedido->all();
+            $data3 = $this->pizzas_pedido->all();
+        }
+
         //dd(Pedido::select('finalizado'));
         return view('actions.pedido',[
             'pedidos' => $data,
             'cliente' => $data2,
-            'pizzasPedido' => $data3
+            'pizzasPedido' => $data3,
+            'search' => $search
         ]);
     }
 

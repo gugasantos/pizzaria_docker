@@ -1,10 +1,10 @@
 @extends('adminlte::page')
 
-@section('title', 'Nova Pizza')
+@section('title', 'Novo Cliente')
 
 @section('content_header')
     <h1>
-    Nova Pizza
+    Novo Cliente
     </h1>
 @endsection
 

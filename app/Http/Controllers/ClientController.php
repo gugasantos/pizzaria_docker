@@ -13,10 +13,22 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $data = Client::paginate(10);
+
+        $search = request('search');
+
+        if($search){
+            $data = Client::where(
+                'name', 'like', '%'.$search.'%'
+            )->orWhere(
+                'phoneNumber', 'like', '%'.$search.'%'
+            )->get();
+        }
+        else{
+            $data = Client::paginate(10);
+        }
 
         return view('actions.client',[
-            'clientes' => $data
+            'clientes' => $data, 'search' => $search
         ]);
     }
 

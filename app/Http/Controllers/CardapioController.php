@@ -13,10 +13,23 @@ class CardapioController extends Controller
      */
     public function index()
     {
-        $data = Pizzas::paginate(10);
+
+
+        $search = request('search');
+
+        if($search){
+            $data = Pizzas::where(
+                'name', 'like', '%'.$search.'%'
+            )->get();
+        }
+        else{
+            $data = Pizzas::paginate(10);
+        }
+
+
 
         return view('actions.pizzas',[
-            'pizzas' => $data
+            'pizzas' => $data, 'search' => $search
         ]);
     }
 
