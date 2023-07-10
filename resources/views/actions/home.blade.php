@@ -28,7 +28,7 @@
             <div class="small-box bg-info">
                 <div class='inner'>
                     <h3>{{$pizzas}}</h3>
-                    <p>Pizzas</p>
+                    <p>Pizzas no cardapio</p>
                 </div>
                 <div class='icon'>
                     <i class="fas fa-pizza-slice"></i>
@@ -39,7 +39,7 @@
             <div class="small-box bg-success">
                 <div class='inner'>
                     <h3>{{$clientes}}</h3>
-                    <p>Clientes</p>
+                    <p>Clientes cadastrados</p>
                 </div>
                 <div class='icon'>
                     <i class="far fa-fw fa-user"></i>
