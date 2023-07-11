@@ -188,7 +188,13 @@ class PedidoController extends Controller
     {
         $data = Pedido::find($id);
 
-        $data->finalizado = false;
+
+        if($data->finalizado === false){
+            $data->finalizado = true;
+        }else{
+            $data->finalizado = false;
+        }
+
 
         $data->save();
 

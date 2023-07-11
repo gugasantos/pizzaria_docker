@@ -69,6 +69,10 @@
                                     @if($pedido->finalizado == true)
                                     <a href="{{ route('pedido.show', [$pedido->id]) }}"
                                         class="btn btn-sm btn-success">Feita</a>
+                                    @else
+                                    <a href="{{ route('pedido.show', [$pedido->id]) }}"
+                                        onsubmit="return confirm('Tem certeza que deseja cancelar esse pedido?')"
+                                        class="btn btn-sm btn-warning">Desfazer</a>
                                     @endif
                                     <a href="{{ route('pedido.edit', [$pedido->id]) }}" class="btn btn-sm btn-info">Editar</a>
                                     <form class="d-inline" action="{{ route('pedido.destroy', [$pedido->id]) }}"
