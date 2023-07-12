@@ -17,19 +17,20 @@ class CardapioController extends Controller
 
         $search = request('search');
 
-        if($search){
+        if ($search) {
             $data = Pizzas::where(
-                'name', 'like', '%'.$search.'%'
+                'name',
+                'like', '%' . $search . '%'
             )->get();
-        }
-        else{
+        } else {
             $data = Pizzas::paginate(10);
         }
 
 
 
-        return view('actions.pizzas',[
-            'pizzas' => $data, 'search' => $search
+        return view('actions.pizzas', [
+            'pizzas' => $data,
+            'search' => $search
         ]);
     }
 
@@ -51,19 +52,19 @@ class CardapioController extends Controller
             'price',
             'description'
         ]);
-        $validator = Validator::make($data,[
+        $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:100'],
             'price' => ['required', 'string'],
-         ]);
+        ]);
 
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->route('cardapio.create')
-                            ->withErrors($validator)
-                            ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
 
-        $data['price'] = number_format($data['price'], 2 , ",", ".");
+        $data['price'] = number_format($data['price'], 2, ",", ".");
 
         $pizza = new Pizzas;
         $pizza->name = $data['name'];
@@ -81,8 +82,8 @@ class CardapioController extends Controller
     {
         $data = Pizzas::find($id);
 
-        if($data){
-            return view('actions.edit',[
+        if ($data) {
+            return view('actions.edit', [
                 'pizza' => $data
             ]);
         }
@@ -95,21 +96,21 @@ class CardapioController extends Controller
     public function update(Request $request, string $id)
     {
         $pedido = Pizzas::find($id);
-        if($pedido){
+        if ($pedido) {
             $data = $request->only([
                 'name',
                 'description',
                 'price'
             ]);
-            $validator = Validator::make($data,[
+            $validator = Validator::make($data, [
                 'name' => ['required', 'string', 'max:100'],
-                'price' => ['required', 'string' , 'max:100']
+                'price' => ['required', 'string', 'max:100']
 
             ]);
-            if($validator->fails()){
+            if ($validator->fails()) {
                 return redirect()->route('cardapio.edit')
-                                ->withErrors($validator)
-                                ->withInput();
+                    ->withErrors($validator)
+                    ->withInput();
             }
         }
         $pedido->name = $data['name'];
