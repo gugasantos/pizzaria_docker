@@ -16,19 +16,21 @@ class ClientController extends Controller
 
         $search = request('search');
 
-        if($search){
+        if ($search) {
             $data = Client::where(
-                'name', 'like', '%'.$search.'%'
+                'name',
+                'like', '%' . $search . '%'
             )->orWhere(
-                'phoneNumber', 'like', '%'.$search.'%'
-            )->get();
-        }
-        else{
+                    'phoneNumber',
+                    'like', '%' . $search . '%'
+                )->get();
+        } else {
             $data = Client::paginate(10);
         }
 
-        return view('actions.client',[
-            'clientes' => $data, 'search' => $search
+        return view('actions.client', [
+            'clientes' => $data,
+            'search' => $search
         ]);
     }
 
@@ -51,17 +53,18 @@ class ClientController extends Controller
             'phoneNumber'
         ]);
 
-        $validator = Validator::make($data,[
+        $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:100'],
             'address' => ['required', 'string'],
             'phoneNumber' => ['required']
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->route('client.create')
-                            ->withErrors($validator)
-                            ->withInput();
-        };
+                ->withErrors($validator)
+                ->withInput();
+        }
+        ;
 
         $cliente = new Client;
         $cliente->name = $data['name'];
@@ -70,14 +73,14 @@ class ClientController extends Controller
 
         $validator = 'Cliente já está cadastrado';
 
-        if($cliente->where('phoneNumber', $data['phoneNumber'])->count() == 0){
+        if ($cliente->where('phoneNumber', $data['phoneNumber'])->count() == 0) {
             $cliente->save();
-        }
-        else{
+        } else {
             return redirect()->route('client.create')
-                            ->withErrors($validator)
-                            ->withInput();
-        };
+                ->withErrors($validator)
+                ->withInput();
+        }
+        ;
 
         return redirect()->route('client.index');
     }
@@ -93,7 +96,7 @@ class ClientController extends Controller
     {
         $data = Client::find($id);
 
-        return view('actions.editClient',[
+        return view('actions.editClient', [
             'cliente' => $data
         ]);
 
@@ -106,22 +109,22 @@ class ClientController extends Controller
     public function update(Request $request, string $id)
     {
         $clientes = Client::find($id);
-        if($clientes){
+        if ($clientes) {
             $data = $request->only([
                 'name',
                 'address',
                 'phoneNumber'
             ]);
-            $validator = Validator::make($data,[
+            $validator = Validator::make($data, [
                 'name' => ['required', 'string', 'max:100'],
                 'address' => ['required', 'string'],
                 'phoneNumber' => ['required', 'integer']
 
             ]);
-            if($validator->fails()){
-                return redirect()->route('client.edit',[$clientes->id])
-                                ->withErrors($validator)
-                                ->withInput();
+            if ($validator->fails()) {
+                return redirect()->route('client.edit', [$clientes->id])
+                    ->withErrors($validator)
+                    ->withInput();
             }
         }
         $clientes->name = $data['name'];

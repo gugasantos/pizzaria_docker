@@ -18,7 +18,7 @@ class PedidoController extends Controller
 
     protected $pedido;
 
-    public function __construct(Pizzas $pizzas, Client $client, PizzasPedido $pizzasPedido ,Pedido $pedido)
+    public function __construct(Pizzas $pizzas, Client $client, PizzasPedido $pizzasPedido, Pedido $pedido)
     {
         $this->pizzas = $pizzas;
         $this->client = $client;
@@ -34,15 +34,15 @@ class PedidoController extends Controller
 
         $search = request('search');
 
-        $c = Client::where('name', 'like', '%'.$search.'%')->get('id');
+        $c = Client::where('name', 'like', '%' . $search . '%')->get('id');
 
         $validator = "Usuário não encontrado";
-        if($search){
-            if($c->count() == 0){
+        if ($search) {
+            if ($c->count() == 0) {
                 return redirect()->route('pedido.index')
-                                ->withErrors($validator)
-                                ->withInput();
-            }else{
+                    ->withErrors($validator)
+                    ->withInput();
+            } else {
                 $data = Pedido::where(
                     'client_id', $c[0]->id
                 )->get();
@@ -53,15 +53,14 @@ class PedidoController extends Controller
 
                 $data3 = $this->pizzas_pedido->all();
             }
-        }
-        else{
+        } else {
             $data2 = $this->client->all();
             $data = $this->pedido->all();
             $data3 = $this->pizzas_pedido->all();
         }
 
         //dd(Pedido::select('finalizado'));
-        return view('actions.pedido',[
+        return view('actions.pedido', [
             'pedidos' => $data,
             'cliente' => $data2,
             'pizzasPedido' => $data3,
@@ -80,7 +79,7 @@ class PedidoController extends Controller
 
         $lista = $this->pizzas->all();
 
-        return view('actions.createPedido',[
+        return view('actions.createPedido', [
             'lista' => $lista,
             'client' => $client,
         ]);
@@ -100,15 +99,15 @@ class PedidoController extends Controller
             'nborda'
         ]);
 
-        $validator = Validator::make($data,[
+        $validator = Validator::make($data, [
             'client' => ['required', 'string', 'max:100'],
             'pizzas' => ['required'],
-         ]);
+        ]);
 
-         if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->route('pedido.create')
-                            ->withErrors($validator)
-                            ->withInput();
+                ->withErrors($validator)
+                ->withInput();
         }
 
         $pizzas = new Pizzas;
@@ -116,37 +115,37 @@ class PedidoController extends Controller
 
         #inclui os id das pizzas na tabela pizzas_pedido coluna pizzas_pedido_id
         $datapizzas = [];
-        foreach($data['pizzas'] as $p){
-            if(intval($p) == 0){
-                $t = $pizzas->where('name',$p)->get('id');
+        foreach ($data['pizzas'] as $p) {
+            if (intval($p) == 0) {
+                $t = $pizzas->where('name', $p)->get('id');
                 $p = $t[0]->id;
                 array_push($datapizzas, strval($p));
-            }else{
+            } else {
                 array_push($datapizzas, $p);
             }
         }
-        if(empty($datapizzas)){
-            $pizzasPedido->pizzas_pedido_id = implode(',',$data['pizzas']);
-        }
-        else{
-            $pizzasPedido->pizzas_pedido_id = implode(',',$datapizzas);
+        if (empty($datapizzas)) {
+            $pizzasPedido->pizzas_pedido_id = implode(',', $data['pizzas']);
+        } else {
+            $pizzasPedido->pizzas_pedido_id = implode(',', $datapizzas);
         }
 
 
 
         $namePizza = array();
         $valuePizza = array();
-        foreach ($data['pizzas'] as $p){
-            if(intval($p) == 0){
+        foreach ($data['pizzas'] as $p) {
+            if (intval($p) == 0) {
                 $t = $pizzas->where('name', $p)->get('id');
                 $p = $t[0]->id;
             }
             array_push($namePizza, $pizzas->find($p)->name);
             array_push($valuePizza, $pizzas->find($p)->price);
-        };
+        }
+        ;
 
         #inclui os nomes das pizzas na tabela pizzas_pedido coluna namePizzas
-        $pizzasPedido->namePizzas = implode(',',$namePizza);
+        $pizzasPedido->namePizzas = implode(',', $namePizza);
 
         $pizzasPedido->save();
 
@@ -158,13 +157,12 @@ class PedidoController extends Controller
         $pedido->note = $data['note'];
 
 
-        if($data['borda'] === 'op2'){
+        if ($data['borda'] === 'op2') {
             $pedido->edge = true;
 
             #valor da borda
-            array_push($valuePizza, strval(2*intval($data['nborda'])));
-        }
-        else{
+            array_push($valuePizza, strval(2 * intval($data['nborda'])));
+        } else {
             $pedido->edge = false;
         }
 
@@ -189,9 +187,9 @@ class PedidoController extends Controller
         $data = Pedido::find($id);
 
 
-        if($data->finalizado === false){
+        if ($data->finalizado === false) {
             $data->finalizado = true;
-        }else{
+        } else {
             $data->finalizado = false;
         }
 
@@ -211,8 +209,8 @@ class PedidoController extends Controller
 
         $lista = $this->pizzas->all();
 
-        if($data){
-            return view('actions.editPedido',[
+        if ($data) {
+            return view('actions.editPedido', [
                 'pedido' => $data,
                 'client' => $client,
                 'lista' => $lista
@@ -228,22 +226,22 @@ class PedidoController extends Controller
     {
         $pedido = Pedido::find($id);
 
-        if($pedido){
+        if ($pedido) {
             $data = $request->only([
-            'client',
-            'note',
-            'pizzas',
-            'price',
-            'borda',
+                'client',
+                'note',
+                'pizzas',
+                'price',
+                'borda',
             ]);
-            $validator = Validator::make($data,[
+            $validator = Validator::make($data, [
                 'client' => ['required', 'string', 'max:100'],
                 'pizzas' => ['required'],
-                ]);
-            if($validator->fails()){
+            ]);
+            if ($validator->fails()) {
                 return redirect()->route('pedido.edit')
-                                ->withErrors($validator)
-                                ->withInput();
+                    ->withErrors($validator)
+                    ->withInput();
             }
         }
 
@@ -252,20 +250,21 @@ class PedidoController extends Controller
         $pizzasPedido = PizzasPedido::find($pedido->pizzas_pedido_id);
 
         #inclui os id das pizzas na tabela pizzas_pedido coluna pizzas_pedido_id
-        $pizzasPedido->pizzas_pedido_id = implode(',',$data['pizzas']);
+        $pizzasPedido->pizzas_pedido_id = implode(',', $data['pizzas']);
 
 
         $namePizza = array();
         $valuePizza = array();
 
 
-        foreach ($data['pizzas'] as $p){
+        foreach ($data['pizzas'] as $p) {
             array_push($namePizza, $pizzas->find($p)->name);
             array_push($valuePizza, $pizzas->find($p)->price);
-        };
+        }
+        ;
 
         #inclui os nomes das pizzas na tabela pizzas_pedido coluna namePizzas
-        $pizzasPedido->namePizzas = implode(',',$namePizza);
+        $pizzasPedido->namePizzas = implode(',', $namePizza);
         $pizzasPedido->update();
 
 
@@ -274,13 +273,12 @@ class PedidoController extends Controller
         $pedido->pizzas_pedido_id = $pizzasPedido->id;
         $pedido->note = $data['note'];
 
-        if($data['borda'] === 'op2'){
+        if ($data['borda'] === 'op2') {
             $pedido->edge = true;
 
             #valor da borda
             array_push($valuePizza, "2");
-        }
-        else{
+        } else {
             $pedido->edge = false;
         }
 
