@@ -35,28 +35,26 @@
                 @method('PUT')
                 @csrf
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Nome TESTE</label>
+                    <label class="col-sm-2 col-form-label">Nome</label>
                     <div class="col-sm-10">
 
-                    <select style="width: 1000px" class="js-example-basic-single col-sm-10 col-form-label" name="client">
-
-                            <option></option>
-                            @foreach($client as $p )
-                            <option value="{{$p->id}}">{{$p->name}}</option>
+                        <select class="js-example-basic-single col-sm-8 col-form-label" name="client">
+                            <option value="{{ $pedido->client_id }}">{{$client->find(($pedido->client_id))->name}}</option>
+                            @foreach ($client as $p)
+                                <option value="{{ $p->id }}">{{$p->name}}</option>
                             @endforeach
 
                         </select>
-                    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-                    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.3/select2.min.js"></script>
-                    <script>
-                        $('.js-example-basic-single').select2({
-                            placeholder:{"Pesquise o cliente aqui"},
-                            allowClear:true,
-                            matcher: function(term, text) { return text.toUpperCase().indexOf(term.toUpperCase())==0;}
-                        });
-                    </script>
-                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.3/select2.min.css">
+                        <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+                        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
+                        <script>
+                            $('.js-example-basic-single').select2({
+                                allowClear: true,
 
+                            });
+                        </script>
+                        <link rel="stylesheet"
+                            href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css">
 
 
                     </div>
@@ -66,16 +64,73 @@
                     <label class="col-sm-2 col-form-label">Pizzas</label>
                     <div class="col-sm-10">
 
-                        <select class="js-example-basic-multiple col-sm-10 col-form-label" name="pizzas[]"  multiple="multiple">
-                                @foreach($lista as $p)
-                                <option value="{{$p->id}}">{{$p->name}}</option>
+                        <select class="js-states js-example-events form-control" name="pizzas[]" multiple="multiple">
+                            @foreach ($pizzaPedido as $item)
+                                    <option value="{{$item}}" selected>{{($lista->find($item)->name)}}</option>
                                 @endforeach
+                            @foreach($lista as $l )
+                            <option value="{{$l->id}}">{{$l->name}}</option>
+                            @endforeach
 
-                        </select>
+                          </select>
                         <script>
-                            $('.js-example-basic-multiple').select2({
-                                placeholder:"Pesquise a pizza aqui",
-                                matcher: function(term, text) { return text.toUpperCase().indexOf(term.toUpperCase())==0;}
+                            var $eventLog = $(".js-event-log");
+                            var $eventSelect = $(".js-example-events");
+
+                            $.fn.select2.defaults.set("width", "50%");
+
+                            $eventSelect.on("select2:open", function(e) {
+                                log("select2:open", e);
+                            });
+                            $eventSelect.on("select2:close", function(e) {
+                                log("select2:close", e);
+                            });
+                            $eventSelect.on("change", function(e) {
+                                log("change");
+                            });
+
+                            $eventSelect.on("select2:select", function(e) {
+                                log("select2:select", e);
+                                $eventSelect.append('<option value="' + e.params.data.text + '">' + e.params.data.text + '</option>');
+                            });
+                            $eventSelect.on("select2:unselect", function(e) {
+                                log("select2:unselect", e);
+                                e.params.data.element.remove();
+                            });
+
+                            function log(name, evt) {
+                                if (!evt) {
+                                    var args = "{}";
+                                } else {
+                                    var args = JSON.stringify(evt.params, function(key, value) {
+                                        if (value && value.nodeName) return "[DOM node]";
+                                        if (value instanceof $.Event) return "[$.Event]";
+                                        return value;
+                                    });
+                                }
+                                var $e = $("<li>" + name + " -> " + args + "</li>");
+                                $eventLog.append($e);
+                                $e.animate({
+                                    opacity: 1
+                                }, 50000, 'linear', function() {
+                                    $e.animate({
+                                        opacity: 0
+                                    }, 2000, 'linear', function() {
+                                        $e.remove();
+                                    });
+                                });
+                            }
+
+                            function formatResultData(data) {
+                                if (!data.id) return data.text;
+                                if (data.element.selected) return
+                                return data.text;
+                            };
+
+                            $eventSelect.select2({
+                                templateResult: formatResultData,
+                                placeholder: "Pesquise a pizza aqui",
+                                allowClear: true,
                             });
                         </script>
 
@@ -86,17 +141,28 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Borda</label>
                     <div class="col-sm-10">
-                        <select name="borda" id="borda">
-                            <option value="op1">Não</option>
-                            <option value="op2">Sim</option>
-                        </select>
+                            @if($pedido->edge == true)
+                                <select name="borda" id="borda">
+                                    <option value="op2" selected>Sim</option>
+                                    <option value="op1">Não</option>
+                                </select>
+                            @else
+                                <select name="borda" id="borda">
+                                    <option value="op2" >Sim</option>
+                                    <option value="op1" selected>Não</option>
+                                </select>
+                            @endif
+
+
+
+
                     </div>
                 </div>
 
                 <div class="form-group row" id="qtborda">
                     <label class="col-sm-2 col-form-label">Quantidade de pizza com borda</label>
                     <div class="col-sm-10">
-                        <input type="number" name = 'nborda' value = '1' class="form-control" style="width:5rem">
+                        <input type="number" name = 'nborda' value = {{$pedido->qtborda}} class="form-control" style="width:5rem">
 
                     </div>
                 </div>
@@ -126,7 +192,10 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#qtborda').hide();
+
+            if("{{$pedido->edge}}" == false){
+                $('#qtborda').hide();
+            }
             $('#borda').change(function() {
                  if ($('#borda').val() == 'op2') {
                     $('#qtborda').show();

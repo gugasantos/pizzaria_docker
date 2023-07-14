@@ -165,7 +165,7 @@ class PedidoController extends Controller
         } else {
             $pedido->edge = false;
         }
-
+        $pedido->qtborda = $data['nborda'];
         $pedido->price = array_sum($valuePizza);
         $pedido->finalizado = true;
 
@@ -206,14 +206,16 @@ class PedidoController extends Controller
     {
         $data = Pedido::find($id);
         $client = $this->client->all();
-
+        $pizzasPedido = PizzasPedido::find($data->pizzas_pedido_id);
+        $pizzasPedidoid = (explode(',',$pizzasPedido->pizzas_pedido_id));
         $lista = $this->pizzas->all();
 
         if ($data) {
             return view('actions.editPedido', [
                 'pedido' => $data,
                 'client' => $client,
-                'lista' => $lista
+                'lista' => $lista,
+                'pizzaPedido' => $pizzasPedidoid
             ]);
         }
         return redirect()->route('index');
@@ -233,6 +235,7 @@ class PedidoController extends Controller
                 'pizzas',
                 'price',
                 'borda',
+                'nborda'
             ]);
             $validator = Validator::make($data, [
                 'client' => ['required', 'string', 'max:100'],
@@ -277,10 +280,13 @@ class PedidoController extends Controller
             $pedido->edge = true;
 
             #valor da borda
-            array_push($valuePizza, "2");
+            array_push($valuePizza, strval(2 * intval($data['nborda'])));
         } else {
             $pedido->edge = false;
         }
+        $pedido->qtborda = $data['nborda'];
+        $pedido->price = array_sum($valuePizza);
+
 
         $pedido->price = array_sum($valuePizza);
 
