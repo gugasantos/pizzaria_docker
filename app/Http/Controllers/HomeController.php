@@ -50,9 +50,12 @@ class HomeController extends Controller
         $pagePie = array_count_values($pagePie);
 
 
+        if(count($pagePie) >= 10 ){
+            $pagePie = array_slice($pagePie, 0, 5);
+        };
+
         $pageLabels = json_encode(array_keys($pagePie));
         $pageValues = json_encode(array_values($pagePie));
-
 
         $pageBar = [];
         $clientesCount = Client::orderBy('numberOfOrders', 'desc')->limit(5)->get();
