@@ -97,9 +97,10 @@
                                     @else
                                         <td>Não</td>
                                     @endif
-                                    <td>{{ $pedido->note }}</td>
+                                    <td style="max-width: 100px;">{{ $pedido->note }}</td>
                                     <td>R$ {{ number_format((float) $pedido->price, 2, ',', '') }}</td>
                                     <td>
+                                        <a href="{{route('gerapdf', [$pedido->id])}}" class="btn btn-sm btn-warning">Imprimir</a>
                                         <a href="{{ route('pedido.show', [$pedido->id]) }}"
                                             class="btn btn-sm btn-success">Feita</a>
                                         <a href="{{ route('pedido.edit', [$pedido->id]) }}" class="btn btn-sm btn-info">Editar</a>

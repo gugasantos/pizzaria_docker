@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Models\Pedido;
 use App\Models\Pizzas;
 use App\Models\PizzasPedido;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -295,7 +296,6 @@ class PedidoController extends Controller
 
         return redirect()->route('pedido.index');
     }
-
     /**
      * Remove the specified resource from storage.
      */
