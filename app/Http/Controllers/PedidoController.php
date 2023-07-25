@@ -97,8 +97,8 @@ class PedidoController extends Controller
             'note',
             'pizzas',
             'borda',
-            'nborda',
-            'nborda2'
+            'nbordadoce',
+            'nborda'
         ]);
 
 
@@ -165,11 +165,12 @@ class PedidoController extends Controller
             $pedido->edge = true;
 
             #valor da borda
-            array_push($valuePizza, strval( (7 * intval($data['nborda']) ) + (5 * intval($data['nborda2']) ) ));
+            array_push($valuePizza, strval( (7 * intval($data['nbordadoce']) ) + (5 * intval($data['nborda']) ) ));
         } else {
             $pedido->edge = false;
         }
-        $pedido->qtborda = $data['nborda'];
+        $pedido->nbordadoce = $data['nbordadoce'];
+        $pedido->nborda = $data['nborda'];
         $pedido->price = array_sum($valuePizza);
         $pedido->finalizado = true;
 

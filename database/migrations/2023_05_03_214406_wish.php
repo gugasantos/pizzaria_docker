@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained('client','id');
             $table->string('note')->nullable();
             $table->boolean('edge');
-            $table->integer('qtborda')->nullable();
+            $table->integer('nbordadoce')->nullable();
+            $table->integer('nborda')->nullable();
             $table->integer('price');
             $table->boolean('finalizado');
             $table->dateTime('updated_at');

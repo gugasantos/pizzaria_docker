@@ -160,12 +160,17 @@
                 </div>
 
                 <div class="form-group row" id="qtborda">
-                    <label class="col-sm-2 col-form-label">Quantidade de pizza com borda</label>
+                    <label class="col-sm-2 col-form-label">Borda doce</label>
                     <div class="col-sm-10">
-                        <input type="number" name = 'nborda' value = {{$pedido->qtborda}} class="form-control" style="width:5rem">
+                        <input type="number" name = 'nbordadoce' value = {{$pedido->nbordadoce}} class="form-control" style="width:5rem">
+                    </div>
 
+                    <label class="col-sm-2 col-form-label">Borda salgada</label>
+                    <div class="col-sm-10">
+                        <input type="number" name = 'nborda' value = {{$pedido->nborda}} class="form-control" style="width:5rem">
                     </div>
                 </div>
+
 
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Descrição</label>

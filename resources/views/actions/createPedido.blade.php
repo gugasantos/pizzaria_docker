@@ -150,12 +150,12 @@
                 <div class="form-group row" id="qtborda">
                     <label class="col-sm-2 col-form-label">Borda doce</label>
                     <div class="col-sm-10">
-                        <input type="number" name = 'nborda' value = '0' class="form-control" style="width:5rem">
+                        <input type="number" name = 'nbordadoce' value = '0' class="form-control" style="width:5rem">
                     </div>
 
                     <label class="col-sm-2 col-form-label">Borda salgada</label>
                     <div class="col-sm-10">
-                        <input type="number" name = 'nborda2' value = '0' class="form-control" style="width:5rem">
+                        <input type="number" name = 'nborda' value = '0' class="form-control" style="width:5rem">
                     </div>
                 </div>
 
