@@ -22,11 +22,15 @@ Route::get('/', function () {
   return redirect()->route('pedido.index');
 });
 
-Route::resource('cardapio',CardapioController::class);
-Route::resource('client',ClientController::class);
-Route::resource('pedido',PedidoController::class);
-Route::resource('dashboard',HomeController::class);
-Route::get('gerapdf/{id}',gerapdfController::class)->name('gerapdf');
+Route::middleware(['auth'])->group(function () {
+
+    Route::resource('cardapio',CardapioController::class);
+    Route::resource('client',ClientController::class);
+    Route::resource('pedido',PedidoController::class);
+    Route::resource('dashboard',HomeController::class);
+    Route::get('gerapdf/{id}',gerapdfController::class)->name('gerapdf');
+
+});
 
 
-
+require __DIR__.'/auth.php';
