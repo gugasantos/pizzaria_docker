@@ -48,4 +48,14 @@ https://www.digitalocean.com/community/tutorials/how-to-install-docker-compose-o
     php artisan migrate
     ```
 
+8. get out bash:
+
+    ```bash
+    exit
+    ```
+9. run npm:
+
+    ```bash
+    npm run build
+    ```
 8. Exit container and Access http://127.0.0.1:8000
