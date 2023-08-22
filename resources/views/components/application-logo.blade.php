@@ -1,1 +1,1 @@
-<img src="https://raw.githubusercontent.com/gugasantos/pizzaria_docker/main/public/vendor/adminlte/dist/img/AdminLTELogoMarinara.png">
+<img src="https://raw.githubusercontent.com/gugasantos/pizzaria_docker/main/public/vendor/adminlte/dist/img/Logo2Marinara-removebg.png">
