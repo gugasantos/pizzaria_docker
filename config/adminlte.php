@@ -312,7 +312,7 @@ return [
         [
             'text' => 'Pedidos',
             'url'  => 'pedido',
-            'icon' => 'nav-icon fas fa-fw fa-user',
+            'icon' => 'nav-icon fas fa-shopping-cart',
         ],
     ],
 
