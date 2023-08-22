@@ -56,7 +56,7 @@ class PedidoController extends Controller
             }
         } else {
             $data2 = $this->client->all();
-            $data = $this->pedido->all();
+            $data = $this->pedido->paginate(10);
             $data3 = $this->pizzas_pedido->all();
         }
 

@@ -51,4 +51,5 @@
         </table>
     </div>
 </div>
+    {{$clientes->links('pagination::bootstrap-5') }}
 @endsection

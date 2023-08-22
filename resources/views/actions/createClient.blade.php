@@ -44,7 +44,7 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Celular</label>
                     <div class="col-sm-10">
-                        <input type="string" name="phoneNumber" value="{{old('phoneNumber"')}}" class="form-control @error('phonenumber') is-invalid @enderror">
+                        <input type="tel" name="phoneNumber" value="{{old('phoneNumber"')}}" class="form-control @error('phonenumber') is-invalid @enderror">
                     </div>
                 </div>
 

@@ -48,5 +48,5 @@
         </table>
     </div>
 </div>
-
+    {{$pizzas->links('pagination::bootstrap-5') }}
 @endsection
