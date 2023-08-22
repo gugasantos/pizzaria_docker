@@ -44,7 +44,7 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Preço</label>
                     <div class="col-sm-10">
-                        <input type="number" step="0.01" name="price" value="{{old('price')}}" class="form-control @error('price') is-invalid @enderror">
+                        <input type="number" min="1" step="any" name="price" value="{{old('price')}}" class="form-control @error('price') is-invalid @enderror">
                     </div>
                 </div>
 

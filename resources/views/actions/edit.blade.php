@@ -45,7 +45,7 @@
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label">valor</label>
                     <div class="col-sm-10">
-                        <input  name="price" value="{{number_format((float)$pizza->price, 2, '.', '')}}" class="form-control @error('title') is-invalid @enderror">
+                        <input type="number" min="1" step="any" name="price" value="{{number_format((float)$pizza->price, 2, '.', '')}}" class="form-control @error('title') is-invalid @enderror">
                     </div>
                 </div>
                 <div class="form-group row">

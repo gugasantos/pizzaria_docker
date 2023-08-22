@@ -64,8 +64,6 @@ class CardapioController extends Controller
                 ->withInput();
         }
 
-        $data['price'] = number_format($data['price'], 2, ",", ".");
-
         $pizza = new Pizzas;
         $pizza->name = $data['name'];
         $pizza->price = $data['price'];
